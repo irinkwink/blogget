@@ -1,11 +1,13 @@
+import React from "react";
+import { Header } from "./components/Header/Header"
+import { Main } from "./components/Main/Main";
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Hello React!</p>
-
-      </header>
-    </div>
+    <React.Fragment>
+      <Header />
+      <Main />
+    </React.Fragment>
   );
 }
 
