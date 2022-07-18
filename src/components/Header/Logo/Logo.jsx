@@ -6,5 +6,5 @@ export const Logo = props => {
     <a className={style.link} href="/">
       <img className={style.logo} src={logo} alt="Логотип Blogget" />
     </a>
-  )
-}
+  );
+};
