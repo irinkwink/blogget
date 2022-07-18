@@ -1,0 +1,17 @@
+.linkAuthor {
+  position: relative;
+  font-size: 12px;
+  line-height: 14px;
+  color: #cc6633;
+  transition: color 0.36s ease-in-out;
+}
+
+.linkAuthor:hover {
+  color: #2d2d2d;
+}
+
+@media (min-width: 580px) {
+  .linkAuthor {
+    font-size: 14px;
+  }
+}
