@@ -3,7 +3,9 @@ import Layout from '../Layout';
 import Tabs from './Tabs';
 import List from './List';
 
+
 export const Main = (props) => {
+  console.log();
   return (
     <main className={style.main}>
       <Layout>
@@ -13,3 +15,4 @@ export const Main = (props) => {
     </main>
   );
 };
+

@@ -42,12 +42,13 @@
   --blue: #285784;
   --green: #5bb12c;
   --white: hsl(0, 0%, 100%);
-  --grayF5: hsl(0, 0%, 96%);
+  --greyF5: hsl(0, 0%, 96%);
   --greyED: hsl(0, 0%, 93%);
   --greyE6: hsl(0, 0%, 90%);
   --greyD9: hsl(0, 0%, 85%);
   --greyBF: hsl(0, 0%, 75%);
   --grey99: hsl(0, 0%, 60%);
+  --grey8F: hsl(0, 0%, 56%);
   --grey66: hsl(0, 0%, 40%);
 }
 

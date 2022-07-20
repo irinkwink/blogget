@@ -1,11 +1,24 @@
 import style from './Title.module.css';
 import PropTypes from 'prop-types';
+import {Text} from '../../../../../UI/Text';
 
 export const Title = ({title, link}) => {
+  console.log();
   return (
-    <h2 className={style.title}>
-      <a className={style.linkPost} href={link}>{title}</a>
-    </h2>
+    <Text
+      As='h2'
+      className={style.title}
+    >
+      <Text
+        As='a'
+        size={18}
+        tsize={24}
+        className={style.linkPost}
+        href={link}
+      >
+        {title}
+      </Text>
+    </Text>
   );
 };
 

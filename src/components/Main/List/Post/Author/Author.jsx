@@ -1,11 +1,19 @@
 import style from './Author.module.css';
 import PropTypes from 'prop-types';
+import {Text} from '../../../../../UI/Text';
 
 export const Author = ({author, link}) => {
+  console.log();
   return (
-    <a className={style.linkAuthor} href={link}>
+    <Text
+      As='a'
+      size={12}
+      tsize={14}
+      color='orange'
+      className={style.linkAuthor}
+      href={link}>
       {author}
-    </a>
+    </Text>
   );
 };
 

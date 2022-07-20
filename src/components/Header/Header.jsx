@@ -6,6 +6,7 @@ import Search from './Search';
 import Auth from './Auth';
 
 export const Header = props => {
+  console.log();
   return (
     <header className={style.header}>
       <Layout>
