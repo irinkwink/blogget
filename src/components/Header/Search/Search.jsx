@@ -1,6 +1,7 @@
 import style from './Search.module.css';
 
 export const Search = props => {
+  console.log();
   return (
     <form className={style.form}>
       <input className={style.search} type="search" />
