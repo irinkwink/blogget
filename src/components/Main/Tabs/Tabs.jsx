@@ -33,7 +33,7 @@ export const Tabs = () => {
 
   useEffect(() => {
     const debounceRecize = debounceRaf(handleResize);
-    debounceRecize;
+    handleResize();
     window.addEventListener('resize', debounceRecize);
     return () => {
       window.removeEventListener('resize', debounceRecize);
