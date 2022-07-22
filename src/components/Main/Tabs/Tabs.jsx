@@ -20,23 +20,23 @@ const LIST = [
 
 export const Tabs = () => {
   const [isDpopdownOpen, setIsDpopdownOpen] = useState(false);
-  const [isDropdown, setIsDpopdown] = useState(true);
+  const [isDropdown, setIsDropdown] = useState(true);
   const [selectedItem, setSelectedItem] = useState(LIST[0].value);
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
-      setIsDpopdown(true);
+      setIsDropdown(true);
     } else {
-      setIsDpopdown(false);
+      setIsDropdown(false);
     }
   };
 
   useEffect(() => {
-    const debounceRecize = debounceRaf(handleResize);
-    debounceRecize;
-    window.addEventListener('resize', debounceRecize);
+    const debounceResize = debounceRaf(handleResize);
+    handleResize();
+    window.addEventListener('resize', debounceResize);
     return () => {
-      window.removeEventListener('resize', debounceRecize);
+      window.removeEventListener('resize', debounceResize);
     };
   }, []);
 
