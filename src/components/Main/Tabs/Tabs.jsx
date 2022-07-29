@@ -19,7 +19,7 @@ const LIST = [
 ].map(assignId);
 
 export const Tabs = () => {
-  const [isDpopdownOpen, setIsDpopdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdown, setIsDropdown] = useState(true);
   const [selectedItem, setSelectedItem] = useState(LIST[0].value);
 
@@ -46,7 +46,7 @@ export const Tabs = () => {
         <div className={style.wrapperBtn}>
           <button
             className={style.btn}
-            onClick={() => setIsDpopdownOpen(!isDpopdownOpen)}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
             {selectedItem}
             <ArrowIcon width={15} height={15} />
@@ -54,10 +54,10 @@ export const Tabs = () => {
         </div>
       )}
 
-      {(isDpopdownOpen || !isDropdown) && (
+      {(isDropdownOpen || !isDropdown) && (
         <ul
           className={style.list}
-          onClick={() => setIsDpopdownOpen(false)}>
+          onClick={() => setIsDropdownOpen(false)}>
           {LIST.map(({value, id, Icon}) => (
             <li className={style.item} key={id}>
               <button
