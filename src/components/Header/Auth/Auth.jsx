@@ -1,19 +1,52 @@
+import {useState} from 'react';
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {ReactComponent as AuthIcon} from './img/login.svg';
+import {urlAuth} from '../../../api/auth';
+import {Text} from '../../../UI/Text';
+import {useAuth} from '../../../hooks/useAuth';
 
-export const Auth = ({auth}) => {
-  console.log();
+export const Auth = ({token, delToken}) => {
+  const auth = useAuth(token);
+  const [isExit, setExit] = useState(false);
+
+  delToken = () => {
+    localStorage.removeItem('bearer');
+    window.location.href = '/';
+  };
+
   return (
-    <button className={style.button}>
-      {auth ? auth : (
-        <AuthIcon className={style.svg} width={128} height={128} />
-      )
-      }
-    </button>
+    <div className={style.container}>
+      {auth.name ? (
+        <>
+          <button className={style.btn}>
+            <img
+              className={style.img}
+              src={auth.img}
+              title={auth.name}
+              alt={`Аватар ${auth.name}`}
+              onClick={() => setExit(!isExit)}
+            />
+          </button>
+          {isExit && (
+            <button
+              className={style.logout}
+              onClick={() => delToken()}
+            >
+              Выйти
+            </button>
+          )}
+        </>
+      ) : (
+        <Text className={style.authLink} As='a' href={urlAuth}>
+          <AuthIcon className={style.svg} width={128} height={128} />
+        </Text>
+      )}
+    </div>
   );
 };
 
 Auth.propTypes = {
-  auth: PropTypes.bool,
+  token: PropTypes.string,
+  delToken: PropTypes.func,
 };
