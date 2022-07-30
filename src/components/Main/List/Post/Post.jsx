@@ -9,11 +9,13 @@ import DeleteBtn from './DeleteBtn';
 
 
 export const Post = ({postData}) => {
-  const {thubmnail, title, author, ups, date} = postData;
+  const {thumbnail, title, author, ups, created_utc: date} = postData;
+  const thumb = (thumbnail === 'default' || thumbnail === 'self') ?
+    '' : thumbnail;
 
   return (
     <li className={style.post}>
-      <Image link={thubmnail} alt={title} />
+      <Image link={thumb} alt={title} />
 
       <div className={style.content}>
         <Title title={title} link='#post' />

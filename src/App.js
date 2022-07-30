@@ -1,20 +1,17 @@
 import {Header} from './components/Header/Header';
 import {Main} from './components/Main/Main';
 import {AuthContextProvider} from './context/authContext';
-import {tokenContext} from './context/tokenContext';
-import {useToken} from './hooks/useToken';
+import {TokenContextProvider} from './context/tokenContext';
 
 function App() {
-  const [token, delToken] = useToken('');
-  const {Provider} = tokenContext;
-
+  console.log();
   return (
-    <Provider value={{token, delToken}}>
+    <TokenContextProvider>
       <AuthContextProvider>
         <Header />
         <Main />
       </AuthContextProvider>
-    </Provider>
+    </TokenContextProvider>
   );
 }
 
