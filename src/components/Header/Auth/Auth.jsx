@@ -7,11 +7,12 @@ import {Text} from '../../../UI/Text';
 import {useAuth} from '../../../hooks/useAuth';
 
 export const Auth = ({token, delToken}) => {
-  const auth = useAuth(token);
+  const [auth, clearAuth] = useAuth(token);
   const [isExit, setExit] = useState(false);
 
-  delToken = () => {
-    localStorage.removeItem('bearer');
+  const logOut = () => {
+    delToken();
+    clearAuth();
     window.location.href = '/';
   };
 
@@ -31,7 +32,7 @@ export const Auth = ({token, delToken}) => {
           {isExit && (
             <button
               className={style.logout}
-              onClick={() => delToken()}
+              onClick={logOut}
             >
               Выйти
             </button>

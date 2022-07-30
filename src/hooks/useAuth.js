@@ -14,8 +14,7 @@ export const useAuth = (token) => {
     })
       .then(response => {
         if (response.status === 401) {
-          localStorage.removeItem('bearer');
-          return '';
+          throw new Error(response.status);
         }
         return response.json();
       })
@@ -26,8 +25,11 @@ export const useAuth = (token) => {
       .catch(err => {
         console.log(err);
         setAuth({});
+        localStorage.removeItem('bearer');
       });
   }, [token]);
 
-  return auth;
+  const clearAuth = () => setAuth({});
+
+  return [auth, clearAuth];
 };
