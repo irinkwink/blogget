@@ -1,17 +1,20 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {ReactComponent as AuthIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {useAuth} from '../../../hooks/useAuth';
+import {tokenContext} from '../../../context/tokenContext';
+import {authContext} from '../../../context/authContext';
 
-export const Auth = ({token, delToken}) => {
-  const auth = useAuth(token);
+export const Auth = () => {
+  const {delToken} = useContext(tokenContext);
   const [isExit, setExit] = useState(false);
+  const {auth, clearAuth} = useContext(authContext);
 
-  delToken = () => {
-    localStorage.removeItem('bearer');
+  const logOut = () => {
+    delToken();
+    clearAuth();
     window.location.href = '/';
   };
 
@@ -31,7 +34,7 @@ export const Auth = ({token, delToken}) => {
           {isExit && (
             <button
               className={style.logout}
-              onClick={() => delToken()}
+              onClick={logOut}
             >
               Выйти
             </button>
