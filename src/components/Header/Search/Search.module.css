@@ -47,14 +47,3 @@
     height: 30px;
   }
 }
-
-@media (min-width: 1024px) {
-  .search {
-    font-size: 20px;
-    padding: 5px 25px;
-  }
-
-  .button:hover {
-    color: var(--orange);
-  }
-}
