@@ -23,8 +23,7 @@ export const useBestPosts = () => {
 
     fetch(url, options)
       .then(response => {
-        console.log('bestPostsResponse', response);
-
+        console.log();
         return response.json();
       })
       .then((json) => {
