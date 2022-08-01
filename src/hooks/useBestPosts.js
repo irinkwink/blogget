@@ -6,10 +6,10 @@ export const useBestPosts = () => {
   const {token} = useContext(tokenContext);
   const [bestPosts, setBestPosts] = useState([]);
 
-  let url = 'https://api.reddit.com/best';
-  let options = {};
-
   useEffect(() => {
+    let url = '';
+    let options = {};
+
     if (token) {
       url = `${URL_API}/best`;
       options = {
@@ -17,6 +17,8 @@ export const useBestPosts = () => {
           Authorization: `bearer ${token}`,
         },
       };
+    } else {
+      url = 'https://api.reddit.com/best';
     }
 
     fetch(url, options)

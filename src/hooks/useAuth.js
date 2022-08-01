@@ -28,6 +28,7 @@ export const useAuth = () => {
         console.log(err);
         setAuth({});
         delToken();
+        window.location.href = '/';
       });
   }, [token]);
 
