@@ -3,7 +3,9 @@ import notPhoto from './img/notphoto.jpg';
 import PropTypes from 'prop-types';
 
 export const Image = ({link, alt}) => {
-  const linkImg = link || notPhoto;
+  const linkImg = link.includes('https') ?
+    link :
+    notPhoto;
 
   return (
     <img className={style.img} src={linkImg} alt={alt} />

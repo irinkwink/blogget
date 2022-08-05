@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
-import {URL_API} from '../api/const';
+import {API_URL, API_AUTH_URL} from '../api/const';
 import {tokenContext} from '../context/tokenContext';
 
 export const useBestPosts = () => {
@@ -11,14 +11,14 @@ export const useBestPosts = () => {
     let options = {};
 
     if (token) {
-      url = `${URL_API}/best`;
+      url = `${API_AUTH_URL}/best`; // https://oauth.reddit.com/best
       options = {
         headers: {
           Authorization: `bearer ${token}`,
         },
       };
     } else {
-      url = 'https://api.reddit.com/best';
+      url = `${API_URL}/best`; // https://api.reddit.com/best
     }
 
     fetch(url, options)

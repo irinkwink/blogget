@@ -1,4 +1,5 @@
-export const URL_API = 'https://oauth.reddit.com';
+export const API_URL = 'https://api.reddit.com';
+export const API_AUTH_URL = 'https://oauth.reddit.com';
 export const URL_AUTH = 'https://www.reddit.com/api/v1/authorize?';
 export const CLIENT_ID = 'vRByDgsIhRuRXuU8aF3lkg';
 export const RESPONSE_TYPE = 'token';

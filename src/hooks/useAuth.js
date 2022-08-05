@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
-import {URL_API} from '../api/const';
+import {API_AUTH_URL} from '../api/const';
 import {tokenContext} from '../context/tokenContext';
 
 export const useAuth = () => {
@@ -9,7 +9,7 @@ export const useAuth = () => {
   useEffect(() => {
     if (!token) return;
 
-    fetch(`${URL_API}/api/v1/me`, {
+    fetch(`${API_AUTH_URL}/api/v1/me`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
