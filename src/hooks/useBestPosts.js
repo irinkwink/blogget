@@ -1,9 +1,9 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {API_URL, API_AUTH_URL} from '../api/const';
-import {tokenContext} from '../context/tokenContext';
 
 export const useBestPosts = () => {
-  const {token} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
   const [bestPosts, setBestPosts] = useState([]);
 
   useEffect(() => {

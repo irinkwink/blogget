@@ -4,7 +4,6 @@ import Tabs from './Tabs';
 import List from './List';
 import {PostsContextProvider} from '../../context/postsContext';
 
-
 export const Main = (props) => {
   console.log();
   return (

@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import {ReactComponent as CloseIcon} from './img/close.svg';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import {useContext, useEffect, useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {useCommentsData} from '../../hooks/useCommentsData';
 import Comments from './Comments';
 import FormComment from './FormComment';
-import {tokenContext} from '../../context/tokenContext';
 import {Text} from '../../UI/Text';
+import {useSelector} from 'react-redux';
 
 export const Modal = ({id, closeModal}) => {
   const [articleData] = useCommentsData(id);
-  const {token} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
 
   const overlayRef = useRef(null);
 
