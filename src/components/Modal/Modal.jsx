@@ -12,7 +12,7 @@ import {useSelector} from 'react-redux';
 
 export const Modal = ({id, closeModal}) => {
   const [articleData] = useCommentsData(id);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.token.token);
 
   const overlayRef = useRef(null);
 

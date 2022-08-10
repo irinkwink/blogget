@@ -6,7 +6,8 @@ import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 import {authContext} from '../../../context/authContext';
 import {useDispatch} from 'react-redux';
-import {deleteToken} from '../../../store';
+import {deleteToken} from '../../../store/tokenReducer';
+
 
 export const Auth = () => {
   const dispatch = useDispatch();

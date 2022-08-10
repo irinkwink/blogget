@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {API_URL, API_AUTH_URL} from '../api/const';
 
 export const useBestPosts = () => {
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.token.token);
   const [bestPosts, setBestPosts] = useState([]);
 
   useEffect(() => {
