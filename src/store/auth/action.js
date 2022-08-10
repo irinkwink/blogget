@@ -1,9 +1,14 @@
+import axios from 'axios';
+import {API_AUTH_URL} from '../../api/const';
+import {deleteToken} from '../tokenReducer';
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_REQUEST_SUCCESS = 'AUTH_REQUEST_SUCCESS';
 export const AUTH_REQUEST_ERROR = 'AUTH_REQUEST_ERROR';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const authRequest = () => ({
   type: AUTH_REQUEST,
+  error: '',
 });
 
 export const authRequestSuccess = (data) => ({
@@ -16,4 +21,32 @@ export const authRequestError = (error) => ({
   error,
 });
 
+export const authLogout = () => ({
+  type: AUTH_LOGOUT,
+});
+
+export const authRequestAsync = () => (dispatch, getState) => {
+  const token = getState().token.token;
+
+  if (!token) return;
+
+  dispatch(authRequest());
+
+  axios(`${API_AUTH_URL}/api/v1/me`, {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  })
+    .then(({data: {name, icon_img: iconImg}}) => {
+      const img = iconImg.replace(/\?.*$/, '');
+      const data = {name, img};
+      dispatch(authRequestSuccess(data));
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch(deleteToken());
+      dispatch(authRequestError(err.message));
+      // window.location.href = '/';
+    });
+};
 
