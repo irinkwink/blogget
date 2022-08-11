@@ -18,6 +18,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        error: action.error,
       };
     case AUTH_REQUEST_SUCCESS:
       return {
@@ -34,9 +35,7 @@ export const authReducer = (state = initialState, action) => {
       };
     case AUTH_LOGOUT:
       return {
-        ...state,
-        data: {},
-        error: '',
+        ...initialState,
       };
     default:
       return state;

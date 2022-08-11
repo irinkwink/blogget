@@ -1,19 +1,27 @@
 import style from './Heading.module.css';
-import PropTypes from 'prop-types';
 import {Text} from '../../../UI/Text';
+import {useParams} from 'react-router-dom';
 
-export const Heading = ({text}) =>
-  <Text
-    As='h1'
-    size={22}
-    tsize={26}
-    center
-    className={style.heading}
-  >
-    {text}
-  </Text>;
+const name = {
+  'rising': 'Главная',
+  'top': 'Топ',
+  'best': 'Лучшие',
+  'hot': 'Горячие',
+  'undefined': 'Blogget',
+};
 
+export const Heading = () => {
+  const {page} = useParams();
 
-Heading.propTypes = {
-  text: PropTypes.string,
+  return (
+    <Text
+      As='h1'
+      size={22}
+      tsize={26}
+      center
+      className={style.heading}
+    >
+      {name[page]}
+    </Text>
+  );
 };

@@ -47,7 +47,7 @@ export const authRequestAsync = () => (dispatch, getState) => {
       console.error(err);
       dispatch(deleteToken());
       dispatch(authRequestError(err.message));
-      // window.location.href = '/';
+      // window.location.href = '/error';
     });
 };
 
