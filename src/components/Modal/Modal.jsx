@@ -11,18 +11,10 @@ import {Text} from '../../UI/Text';
 import {useSelector} from 'react-redux';
 
 export const Modal = ({id, closeModal}) => {
-  const [articleData] = useCommentsData(id);
-  const token = useSelector(state => state.token);
+  const [post, comments, status, error] = useCommentsData(id);
+  const token = useSelector(state => state.token.token);
 
   const overlayRef = useRef(null);
-
-  const post = articleData[0] ?
-    articleData[0].data.children[0].data :
-    {};
-
-  const comments = articleData[1] ?
-    articleData[1].data.children :
-    {};
 
   const handleClick = (e) => {
     if (e.target === overlayRef.current) {
@@ -53,7 +45,15 @@ export const Modal = ({id, closeModal}) => {
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {articleData[0] ? (
+        {status === 'loading' && (
+          <Text As='p' size={18} tsize={24}>
+            Загрузка...
+          </Text>)}
+        {status === 'error' && (
+          <Text As='p' size={18} tsize={24}>
+            Ошибка: {error}
+          </Text>)}
+        {status === 'loaded' && (
           <>
             <Text As='h2' className={style.title} size={18} tsize={24}>
               {post.title}
@@ -86,10 +86,6 @@ export const Modal = ({id, closeModal}) => {
 
             <Comments comments={comments}/>
           </>
-        ) : (
-          <Text As='p' size={18} tsize={24}>
-            Загрузка...
-          </Text>
         )}
 
         <button

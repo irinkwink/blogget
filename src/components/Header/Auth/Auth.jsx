@@ -1,27 +1,35 @@
-import {useContext, useState} from 'react';
+import {useState} from 'react';
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {ReactComponent as AuthIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {authContext} from '../../../context/authContext';
 import {useDispatch} from 'react-redux';
-import {deleteToken} from '../../../store';
+import {deleteToken} from '../../../store/tokenReducer';
+import {useAuth} from '../../../hooks/useAuth';
+import Preloader from '../../../UI/Preloader';
+import ErrorModal from '../../errorModal';
+
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const [isExit, setExit] = useState(false);
-  const {auth, clearAuth} = useContext(authContext);
+  const [auth, loading, error, clearAuth] = useAuth();
 
   const logOut = () => {
     dispatch(deleteToken());
     clearAuth();
-    window.location.href = '/';
+    // window.location.href = '/';
   };
 
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {error && (
+        <ErrorModal error={`Ошибка авторизации: ${error}`}/>
+      )}
+      {loading ? (
+        <Preloader size={30}/>
+      ) : auth.name ? (
         <>
           <button className={style.btn}>
             <img

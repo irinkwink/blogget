@@ -1,51 +1,22 @@
-/* eslint-disable react/jsx-key */
-import {useContext} from 'react';
-import {postsContext} from '../../../context/postsContext';
+import {usePostsData} from '../../../hooks/usePostsData';
+import Preloader from '../../../UI/Preloader';
 import {generateRandomId} from '../../../utils/generateRandomId';
 import style from './List.module.css';
 import Post from './Post';
 
 export const List = props => {
-  const {bestPosts} = useContext(postsContext);
-  // const postsData = [
-  //   {
-  //     thubmnail: '',
-  //     title: 'Title1',
-  //     author: 'Nickname1',
-  //     ups: 24,
-  //     date: '2022-02-24T00:45:00.000Z',
-  //     id: '456'
-  //   },
-  //   {
-  //     thubmnail: '',
-  //     title: 'Title2',
-  //     author: 'Nickname2',
-  //     ups: 77,
-  //     date: '2022-01-04T12:45:00.000Z',
-  //     id: '324'
-  //   },
-  //   {
-  //     thubmnail: '',
-  //     title: 'Title3',
-  //     author: 'Nickname3',
-  //     ups: 56,
-  //     date: '2022-03-10T15:08:00.000Z',
-  //     id: '287'
-  //   },
-  //   {
-  //     thubmnail: '',
-  //     title: 'Title4',
-  //     author: 'Nickname4',
-  //     ups: 22,
-  //     date: '2022-04-03T16:10:00.000Z',
-  //     id: '459'
-  //   },
-  // ];
+  const [postsData, loading] = usePostsData();
 
   return (
     <ul className={style.list}>
-      {bestPosts.map(postData =>
-        <Post key={generateRandomId()} postData={postData.data} />)
+      {loading ? (
+        <Preloader size={100} />
+      ) : (
+        <>
+          {postsData.map(postData =>
+            <Post key={generateRandomId()} postData={postData.data} />)}
+        </>
+      )
       }
     </ul>
   );
