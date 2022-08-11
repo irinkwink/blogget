@@ -48,7 +48,7 @@ export const Modal = ({id, closeModal}) => {
         {status === 'loading' && (
           <Text As='p' size={18} tsize={24}>
             Загрузка...
-          </Text>) }
+          </Text>)}
         {status === 'error' && (
           <Text As='p' size={18} tsize={24}>
             Ошибка: {error}

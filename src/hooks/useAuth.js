@@ -6,8 +6,9 @@ import {
 
 export const useAuth = () => {
   const auth = useSelector(state => state.auth.data);
-  const token = useSelector(state => state.token.token);
   const loading = useSelector(state => state.auth.loading);
+  const error = useSelector(state => state.auth.error);
+  const token = useSelector(state => state.token.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,5 +17,5 @@ export const useAuth = () => {
 
   const clearAuth = () => dispatch(authLogout());
 
-  return [auth, loading, clearAuth];
+  return [auth, loading, error, clearAuth];
 };

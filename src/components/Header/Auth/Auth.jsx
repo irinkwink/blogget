@@ -8,12 +8,13 @@ import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/tokenReducer';
 import {useAuth} from '../../../hooks/useAuth';
 import Preloader from '../../../UI/Preloader';
+import ErrorModal from '../../errorModal';
 
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const [isExit, setExit] = useState(false);
-  const [auth, loading, clearAuth] = useAuth();
+  const [auth, loading, error, clearAuth] = useAuth();
 
   const logOut = () => {
     dispatch(deleteToken());
@@ -23,6 +24,9 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
+      {error && (
+        <ErrorModal error={`Ошибка авторизации: ${error}`}/>
+      )}
       {loading ? (
         <Preloader size={30}/>
       ) : auth.name ? (
