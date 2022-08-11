@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {API_AUTH_URL} from '../../api/const';
 import {deleteToken} from '../tokenReducer';
+
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_REQUEST_SUCCESS = 'AUTH_REQUEST_SUCCESS';
 export const AUTH_REQUEST_ERROR = 'AUTH_REQUEST_ERROR';
