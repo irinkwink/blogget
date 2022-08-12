@@ -6,7 +6,7 @@ import {API_AUTH_URL, API_URL} from '../../api/const';
 
 export const postsRequestAsync = createAsyncThunk(
   'posts/fetch',
-  (_, {getState, rejectWithValue, dispatch}) => {
+  (_, {getState, rejectWithValue}) => {
     const page = getState().posts.page;
     const token = getState().token.token;
     const {posts, after, isLast, pageNumber} = getState().posts;

@@ -54,7 +54,7 @@ export const List = () => {
         dispatch(postsRequestAsync());
       }
     }, {
-      rootMargin: '200px',
+      rootMargin: '50px',
     });
 
     if (endList.current) {
