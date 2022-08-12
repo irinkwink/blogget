@@ -14,23 +14,21 @@ export const commentsSlice = createSlice({
   reducers: {
   },
   extraReducers: {
-    [commentsRequestAsync.pending.type]: (state) => {
+    [commentsRequestAsync.pending]: (state) => {
       state.status = 'loading';
       state.error = '';
     },
-    [commentsRequestAsync.fulfilled.type]: (state, action) => {
+    [commentsRequestAsync.fulfilled]: (state, action) => {
       state.post = action.payload.post;
       state.comments = action.payload.comments;
       state.status = 'loaded';
       state.error = '';
     },
-    [commentsRequestAsync.rejected.type]: (state, action) => { // ???
+    [commentsRequestAsync.rejected]: (state, action) => { // ???
       state.status = 'error';
-      state.error = action.payload.error;
+      state.error = action.payload;
     },
   }
 });
-
-console.log('commentsSlice: ', commentsSlice);
 
 export default commentsSlice.reducer;

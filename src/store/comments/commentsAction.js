@@ -4,7 +4,7 @@ import {API_URL} from '../../api/const';
 
 export const commentsRequestAsync = createAsyncThunk(
   'comments/fetch',
-  (id) => {
+  (id, {rejectWithValue}) => {
     console.log();
     return axios(`${API_URL}/comments/${id}`)
       .then(({data}) => {
@@ -14,7 +14,7 @@ export const commentsRequestAsync = createAsyncThunk(
       })
       .catch(error => {
         console.error(error);
-        return {error: error.message};
+        return rejectWithValue(error.message);
       });
   }
 );

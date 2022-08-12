@@ -1,25 +1,38 @@
 import {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Outlet, useParams} from 'react-router-dom';
-import {
-  postsDataClear,
-  postsDataRequestAsync
-} from '../../../store/postsData/postsDataAction';
+import {postsRequestAsync} from '../../../store/posts/postsAction';
+import {postsSlice} from '../../../store/posts/postsSlice';
 import Preloader from '../../../UI/Preloader';
 import {generateRandomId} from '../../../utils/generateRandomId';
 import style from './List.module.css';
 import Post from './Post';
 
+
 export const List = () => {
-  const token = useSelector(state => state.token.token);
-  const postsData = useSelector(state => state.postsData.posts);
-  const loading = useSelector(state => state.postsData.loading);
-  const after = useSelector(state => state.postsData.after);
-  const pageNumber = useSelector(state => state.postsData.pageNumber);
-  const endList = useRef(null);
   const dispatch = useDispatch();
+  const token = useSelector(state => state.token.token);
+  const statePage = useSelector(state => state.posts.page);
   const {page} = useParams();
 
+  useEffect(() => {
+    dispatch(postsSlice.actions.postsClear());
+    if (statePage) {
+      dispatch(postsRequestAsync());
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (page !== statePage) {
+      dispatch(postsSlice.actions.changePage(page));
+    }
+  });
+
+  const posts = useSelector(state => state.posts.posts);
+  const loading = useSelector(state => state.posts.loading);
+  const after = useSelector(state => state.posts.after);
+  const pageNumber = useSelector(state => state.posts.pageNumber);
+  const endList = useRef(null);
 
   const firstLoading = after ? false : loading;
 
@@ -27,21 +40,18 @@ export const List = () => {
 
   const handleClick = (e) => {
     e.target.blur();
-    dispatch(postsDataRequestAsync());
+    dispatch(postsRequestAsync());
   };
 
-  useEffect(() => {
-    dispatch(postsDataClear(page));
-  }, [token]);
 
   useEffect(() => {
-    dispatch(postsDataRequestAsync(page));
+    dispatch(postsRequestAsync());
   }, [page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        dispatch(postsDataRequestAsync());
+        dispatch(postsRequestAsync());
       }
     }, {
       rootMargin: '200px',
@@ -55,7 +65,7 @@ export const List = () => {
         observer.unobserve(endList.current);
       }
     };
-  }, [endList.current]);
+  }, [after]);
 
   return (
     <>
@@ -64,21 +74,27 @@ export const List = () => {
         <Preloader size={100} />
         ) : (
         <>
-          {postsData.map(postData =>
-            <Post key={generateRandomId()} postData={postData.data} />)}
+          {console.log('render')}
+          {posts.map(post =>
+            <Post key={generateRandomId()} postData={post.data} />)}
         </>
         )
         }
-        {isShowButton ? (
-          <button
-            className={style.btn}
-            onClick={handleClick}
-          >
-            загрузить ещё
-          </button>
+        {loading && !firstLoading ? (
+          <Preloader size={45} />
         ) : (
-          <li className={style.end} ref={endList}/>
-        )}
+        after && (
+          isShowButton ? (
+            <button
+              className={style.btn}
+              onClick={handleClick}
+            >
+              загрузить ещё
+            </button>
+          ) : (
+            <li className={style.end} ref={endList}/>
+          )
+        ))}
       </ul>
       <Outlet />
     </>

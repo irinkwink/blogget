@@ -17,7 +17,7 @@ export const Auth = () => {
   const [auth, loading, error, clearAuth] = useAuth();
   const navigate = useNavigate();
   const [isExit, setExit] = useState(false);
-  const page = useSelector(state => state.postsData.page);
+  const page = useSelector(state => state.posts.page);
 
   const logOut = () => {
     dispatch(deleteToken());
