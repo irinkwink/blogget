@@ -32,6 +32,9 @@ export const List = () => {
 
   useEffect(() => {
     dispatch(postsDataClear(page));
+    if (page) {
+      dispatch(postsDataRequestAsync(page));
+    }
   }, [token]);
 
   useEffect(() => {
@@ -55,7 +58,7 @@ export const List = () => {
         observer.unobserve(endList.current);
       }
     };
-  }, [endList.current]);
+  }, [after]);
 
   return (
     <>
@@ -63,22 +66,27 @@ export const List = () => {
         {firstLoading ? (
         <Preloader size={100} />
         ) : (
-        <>
-          {postsData.map(postData =>
-            <Post key={generateRandomId()} postData={postData.data} />)}
-        </>
+          <>
+            {postsData.map(postData =>
+              <Post key={generateRandomId()} postData={postData.data} />)}
+          </>
         )
         }
-        {isShowButton ? (
-          <button
-            className={style.btn}
-            onClick={handleClick}
-          >
-            загрузить ещё
-          </button>
+        {loading && !firstLoading ? (
+          <Preloader size={45} />
         ) : (
-          <li className={style.end} ref={endList}/>
-        )}
+        after && (
+          isShowButton ? (
+            <button
+              className={style.btn}
+              onClick={handleClick}
+            >
+              загрузить ещё
+            </button>
+          ) : (
+            <li className={style.end} ref={endList}/>
+          )
+        ))}
       </ul>
       <Outlet />
     </>
