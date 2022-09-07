@@ -3,10 +3,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Outlet, useParams} from 'react-router-dom';
 import {postsRequestAsync} from '../../../store/posts/postsAction';
 import {postsSlice} from '../../../store/posts/postsSlice';
+import {searchClear} from '../../../store/search/searchAction';
 import Preloader from '../../../UI/Preloader';
 import {generateRandomId} from '../../../utils/generateRandomId';
 import style from './List.module.css';
 import Post from './Post';
+import {Text} from '../../../UI/Text';
+import {searchRequest} from '../../../store/search/searchAction.js';
+import {useNavigate} from 'react-router-dom';
 
 
 export const List = () => {
@@ -14,24 +18,43 @@ export const List = () => {
   const token = useSelector(state => state.token.token);
   const statePage = useSelector(state => state.posts.page);
   const {page} = useParams();
+  const search = useSelector(state => state.search.search);
+  const navigate = useNavigate();
+
+
+  let type = 'search';
+
+  if (page) {
+    type = 'posts';
+  }
 
   useEffect(() => {
-    dispatch(postsSlice.actions.postsClear());
-    if (statePage) {
-      dispatch(postsRequestAsync());
+    if (page) {
+      dispatch(postsSlice.actions.postsClear());
+      if (statePage) {
+        dispatch(postsRequestAsync());
+      }
     }
   }, [token]);
 
   useEffect(() => {
-    if (page !== statePage) {
+    if (page) {
+      if (page !== statePage) {
+        dispatch(postsSlice.actions.changePage(page));
+      }
+    } else {
+      dispatch(postsSlice.actions.postsClear());
       dispatch(postsSlice.actions.changePage(page));
+      if (!search) {
+        navigate(`/`);
+      }
     }
   });
 
-  const posts = useSelector(state => state.posts.posts);
-  const loading = useSelector(state => state.posts.loading);
-  const after = useSelector(state => state.posts.after);
-  const pageNumber = useSelector(state => state.posts.pageNumber);
+  const posts = useSelector(state => state[type].posts);
+  const loading = useSelector(state => state[type].loading);
+  const after = useSelector(state => state[type].after);
+  const pageNumber = useSelector(state => state[type].pageNumber);
   const endList = useRef(null);
 
   const firstLoading = after ? false : loading;
@@ -40,17 +63,28 @@ export const List = () => {
 
   const handleClick = (e) => {
     e.target.blur();
-    dispatch(postsRequestAsync());
+    if (page) {
+      dispatch(postsRequestAsync());
+    } else {
+      dispatch(searchRequest());
+    }
   };
 
   useEffect(() => {
-    dispatch(postsRequestAsync());
+    if (page) {
+      dispatch(postsRequestAsync());
+      dispatch(searchClear());
+    }
   }, [page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        dispatch(postsRequestAsync());
+        if (page) {
+          dispatch(postsRequestAsync());
+        } else {
+          dispatch(searchRequest());
+        }
       }
     }, {
       rootMargin: '50px',
@@ -72,12 +106,22 @@ export const List = () => {
         {firstLoading ? (
         <Preloader size={100} />
         ) : (
-        <>
-          {posts.map(post =>
-            <Post key={generateRandomId()} postData={post.data} />)}
-        </>
-        )
-        }
+          posts.length > 0 ? (
+            <>
+              {posts.map(post =>
+                <Post key={generateRandomId()} postData={post.data} />)}
+            </>
+          ) : (
+            <div className={style.wrapper}>
+              <Text As='p' color='orange' size={22} tsize={26} center>
+                Нет постов по данному запросу!
+              </Text>
+              <Text As='p' size={20} tsize={24} center>
+                Попробуйте изменить текст поиска.
+              </Text>
+            </div>
+          )
+        )}
         {loading && !firstLoading ? (
           <Preloader size={45} />
         ) : (

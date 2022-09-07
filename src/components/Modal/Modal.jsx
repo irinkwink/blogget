@@ -11,22 +11,35 @@ import {useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 
 export const Modal = () => {
-  const {id, page} = useParams();
+  const {id} = useParams();
+  const page = useSelector(state => state.posts.page);
   const navigate = useNavigate();
   const [post, comments, status, error] = useCommentsData(id);
   const token = useSelector(state => state.token.token);
 
   const overlayRef = useRef(null);
 
+  const navigateTo = () => {
+    if (page) {
+      navigate(`/category/${page}`);
+    } else {
+      navigate(`/search`);
+    }
+  };
+
+  const handleCloseClick = () => {
+    navigateTo();
+  };
+
   const handleClick = (e) => {
     if (e.target === overlayRef.current) {
-      navigate(`/category/${page}`);
+      navigateTo();
     }
   };
 
   const handleKeyPress = (e) => {
     if (e.code === 'Escape') {
-      navigate(`/category/${page}`); // navigate(-1);
+      navigateTo();
     }
   };
 
@@ -92,9 +105,7 @@ export const Modal = () => {
 
         <button
           className={style.close}
-          onClick={() => {
-            navigate(`/category/${page}`);
-          }}
+          onClick={handleCloseClick}
         >
           <CloseIcon />
         </button>

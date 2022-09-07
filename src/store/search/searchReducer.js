@@ -1,16 +1,19 @@
 import {
+  SEARCH_CLEAR,
+  SEARCH_CLEAR_RESULTS,
   SEARCH_REQUEST,
   SEARCH_REQUEST_ERROR,
-  SEARCH_REQUEST_SUCCESS
+  SEARCH_REQUEST_SUCCESS,
+  SEARCH_SET
 } from './searchAction';
 
 const initialState = {
+  search: '',
   loading: false,
   posts: [],
   error: '',
   after: '',
-  page: '',
-  pageNumber: 0,
+  pageNumber: -1,
   isLast: false,
 };
 
@@ -26,8 +29,9 @@ export const searchReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: action.posts,
+        posts: [...state.posts, ...action.posts],
         error: '',
+        pageNumber: state.pageNumber + 1,
         after: action.after,
         isLast: !action.after,
       };
@@ -36,6 +40,25 @@ export const searchReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.error,
+      };
+    case SEARCH_SET:
+      return {
+        ...state,
+        search: action.search,
+      };
+    case SEARCH_CLEAR:
+      return {
+        ...initialState,
+      };
+    case SEARCH_CLEAR_RESULTS:
+      return {
+        ...state,
+        loading: false,
+        posts: [],
+        error: '',
+        after: '',
+        pageNumber: -1,
+        isLast: false,
       };
     default:
       return state;

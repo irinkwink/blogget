@@ -1,17 +1,16 @@
 import style from './Title.module.css';
 import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text';
-import {Link, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export const Title = ({id, title, author, markdown}) => {
-  const {page} = useParams();
-
+  console.log();
   return (
     <>
       <Text As='h2' className={style.title}>
         <Link
           className={style.linkPost}
-          to={`/category/${page}/post/${id}`}
+          to={`/post/${id}`}
         >
           <Text
             size={14}

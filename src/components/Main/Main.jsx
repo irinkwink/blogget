@@ -26,7 +26,7 @@ export const Main = (props) => {
               </Text>
             </div>
           }/>
-          <Route path='/auth' element={
+          <Route path='auth' element={
             <div className={style.mainPage}>
               <Text As='p' color='orange' size={22} tsize={26} center>
                 Поздравляю, вы успешно авторизовались!
@@ -43,6 +43,15 @@ export const Main = (props) => {
               </Text>
             </div>
           }/>
+          <Route path='post/:id' element={
+            <Modal />
+          }></Route>
+          <Route path='category/:page' element={
+            <List />
+          } />
+          <Route path='search' element={
+            <List />
+          } />
           <Route path='*' element={
             <div className={style.mainPage}>
               <Text As='p' color='orange' size={20} tsize={24} center>
@@ -53,13 +62,6 @@ export const Main = (props) => {
               </Text>
             </div>
           }/>
-          <Route path='category/:page' element={
-            <List />
-          }>
-            <Route path='post/:id' element={
-              <Modal />
-            }></Route>
-          </Route>
         </Routes>
       </Layout>
     </main>

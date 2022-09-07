@@ -18,11 +18,16 @@ export const Auth = () => {
   const navigate = useNavigate();
   const [isExit, setExit] = useState(false);
   const page = useSelector(state => state.posts.page);
+  const search = useSelector(state => state.search.search);
 
   const logOut = () => {
     dispatch(deleteToken());
     clearAuth();
-    page ? navigate(`/category/${page}`) : navigate(`/`);
+    search ?
+      navigate(`/search`) :
+      page ?
+        navigate(`/category/${page}`) :
+        navigate(`/`);
   };
 
   useEffect(() => {

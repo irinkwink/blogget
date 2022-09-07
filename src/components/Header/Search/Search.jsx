@@ -1,23 +1,34 @@
-import {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {searchRequest} from '../../../store/search/searchAction';
+import {useDispatch, useSelector} from 'react-redux';
+import {searchRequest, searchSet, searchClearResults}
+  from '../../../store/search/searchAction';
 import style from './Search.module.css';
+import {useNavigate} from 'react-router-dom';
 
 export const Search = props => {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+  const search = useSelector(state => state.search.search);
 
   const handlerSubmit = e => {
     e.preventDefault();
-    dispatch(searchRequest(search));
+    dispatch(searchClearResults());
+    dispatch(searchRequest());
+    navigate(`/search`);
+  };
+
+  const setSearch = (e) => {
+    dispatch(searchSet(e.target.value));
   };
 
   return (
-    <form className={style.form} onSubmit={handlerSubmit}>
+    <form
+      className={style.form}
+      onSubmit={handlerSubmit}
+    >
       <input
         className={style.search}
-        type="search"
-        onChange={e => setSearch(e.target.value)}
+        type='search'
+        onChange={setSearch}
         value={search}
       />
       <button className={style.button} type='submit'>
